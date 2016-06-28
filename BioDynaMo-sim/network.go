@@ -1,4 +1,5 @@
-package network
+//package network
+package main
 
 const (
     Latency   = 10 // ms
