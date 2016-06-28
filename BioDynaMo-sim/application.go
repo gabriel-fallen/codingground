@@ -9,6 +9,6 @@ type SpaceCube struct {
 }
 
 func (cube SpaceCube) Process() {
-    delay := int(cube.w*cube.h)*cube.complexity
-    time.Sleep(delay * time.Millisecond)
+    delay := cube.w*cube.h*float32(cube.complexity)
+    time.Sleep(time.Duration(delay) * time.Millisecond)
 }
