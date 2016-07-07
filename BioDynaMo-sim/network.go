@@ -4,6 +4,7 @@ package main
 import (
     "time"
     "math/rand"
+    "sync/atomic"
 )
 
 const (
@@ -19,9 +20,12 @@ const (
 type WorkerFunc func(workQueue <-chan SpaceCube, resultQueue chan<- SpaceCube)
 
 
-func SendMesssage(msg interface{}, link chan<- interface{}) {
+var messages_counter uint64
+
+func SendMesssage(send_it func()) {
     time.Sleep(Latency)
-    link <- msg
+    send_it()
+    atomic.AddUint64(&messages_counter, 1)
 }
 
 func SimpleNode(worker WorkerFunc, failer func(*time.Ticker), workQueue <-chan SpaceCube, resultQueue chan<- SpaceCube) (heartbeat <-chan time.Time) {
