@@ -92,7 +92,7 @@ func (cube SpaceCube) Split() (cubes [8]SpaceCube) {
 func SimpleWorker(workQueue <-chan SpaceCube, resultQueue chan<- SpaceCube) {
     for cube := range workQueue {
         cube.Process() // here we sleep simulating busy work
-        resultQueue <- cube
+        SendMesssage(cube, resultQueue) // resultQueue <- cube
     }
     // FIXME: close(resultQueue)
 }
